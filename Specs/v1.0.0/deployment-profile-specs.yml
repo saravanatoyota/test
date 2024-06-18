@@ -1,0 +1,20 @@
+############################
+# Deployment Profile Specs #
+############################
+Deployment: 
+  Profile: 
+    #deployment specs file path inside specs version folder. This file will contain deploymnet details. 
+    Dev: './Deployment/dev-specs.yml'
+    Python-whl: './Deployment/python-whl-specs.yml'
+    Dev1: './Deployment/dev1-specs.yml'
+    QA: './Deployment/qa-specs.yml'  
+    Stage: './Deployment/stage-specs.yml'
+    Prod: './Deployment/prod-specs.yml'
+  #deployment target flag valid valus are "ture" and "false"
+  Target: 
+    Dev: false
+    Dev1: false
+    Python-whl: false
+    QA: false
+    Stage: false
+    Prod: false

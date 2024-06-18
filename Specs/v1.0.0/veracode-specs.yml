@@ -1,0 +1,128 @@
+#################################################################################################################################################
+# Veracode Specs
+# The Veracode API is major step you complete on the Veracode Platform, automating the scanning, reviewing, mitigating, and administrative tasks.
+# Submit a myAccess request for Veracode developer role.  Search for the term [Veracode: Developer]
+# Launch Veracode from the https://tfs.okta.com portal.
+#################################################################################################################################################
+
+Veracode:
+    # Veracode scan execution flag, if false Veracode stage will skip.
+    isVeracodeScan: false
+
+    # Enter the name of the application. 
+    # This can be an application that already exists on the Veracode Platform, or a new one that Jenkins creates.
+    applicationName: 'TMCC_Testing'
+#     applicationName: 'TMCC_Test_App_ForDemo'
+    createProfile: false
+
+    #  # Creates a new sandbox if a sandbox name is provided and a matching sandbox is not found on the Veracode Platform.
+    # Is set to false, a sandbox name is provided, 
+    # and a matching sandbox is not found on the Veracode Platform, the Jenkins build will fail.
+    createSandbox: true
+
+    # Select the checkbox if you want the entire Jenkins job to fail if the upload and scan with Veracode action fails. 
+    # If you do not select this option and the upload and scan with Veracode action fails, 
+    # the Jenkins job completes and the failure is logged, but you do not receive any notification of the failure.
+    canFailJob: true
+
+    # Enable to display additional information in the console output window, 
+    # including the supplied credentials.
+    debug: true
+
+    # Enter the business criticality for the application.
+    criticality: 'Low'
+
+    # Enter the filename pattern that represents the names of the uploaded files that should be saved with a different name.
+    # The '*' wildcard matches 0 or more characters. The '?' wildcard matches exactly 1 character. 
+    # Each wildcard corresponds to a numbered group that can be referenced in the replacement pattern.
+    # Pattern is case-sensitive.
+    # Because the matching is performed based only on filename, it is incorrect to use patterns that include path separators ('\' or '/').
+    # No uploaded files are saved with a different name when either the filename pattern or the replacement pattern is omitted.
+    # For example, "*" or "**.jar" or "**.j?va"
+    fileNamePattern: ''
+
+    # Enter the replacement pattern that represents the groups captured by the filename pattern. 
+    # For example, if the filename pattern is '*-*-SNAPSHOT.war' and the replacement pattern '$1-master-SNAPSHOT.war', 
+    # an uploaded file named 'app-branch-SNAPSHOT.war' would be saved as 'app-master-SNAPSHOT.war'.
+    # In order to specify a replacement pattern that includes a reference to a captured group followed by a number, 
+    # place the captured group's index inside curly braces. 
+    # For example, if the filename pattern is '*-*-SNAPSHOT.war' and the replacement pattern '${1}5-master-SNAPSHOT.war', 
+    # an uploaded file named 'app-branch-SNAPSHOT.war' would be saved as 'app5-master-SNAPSHOT.war'.
+    # New filenames for uploaded files must be valid. Path separators ('\' or '/') should not be included.
+    # No uploaded files are saved with a different name when either the filename pattern or the replacement pattern is omitted.
+    replacementPattern: ''
+    
+    # Enter the name of the sandbox. 
+    # This can be a sandbox that already exists on the Veracode Platform, or a new one that Jenkins creates.
+    # If you leave this field empty, no sandbox is used.
+    sandboxName: 'FACT0902-Java-Sample-App'
+
+    # Enter the filenames of the uploaded files to not scan as top level modules, 
+    # represented as a comma-separated list of ant-style exclude patterns such that '*' matches 0 or more characters and '?' matches exactly 1 character.
+    # Patterns are case-sensitive. Patterns that include commas because they denote filenames 
+    # that contain commas need to replace the commas with a wildcard character.
+    # Because the matching is performed based only on filename, 
+    # it is incorrect to use patterns that include path separators ('\' or '/').
+    # If no filepaths are provided, no files (except default excludes) in the job's workspace root directory are excluded.
+    # Using scan patterns will disable the auto-scan functionality.  User will have to log into Veracode,
+    # select modules, and start the scan manually.  
+    # For example, "*" or "**.jar" or "?oss-modules.jar"
+    scanExcludesPattern: '*jq'
+
+    # Enter the filenames of the uploaded files to scan as top level modules, represented as a comma-separated list of ant-style 
+    # include patterns such that '*' matches 0 or more characters and '?' matches exactly 1 character.
+    # Patterns are case-sensitive. Patterns that include commas because they denote filenames that contain commas need to replace the commas with a wildcard character.
+    # Because the matching is performed based only on filename, it is incorrect to use patterns that include path separators ('\' or '/').
+    # If no filenames are provided, all uploaded files are included as top level modules.
+    # Using scan patterns will disable the auto-scan functionality.  User will have to log into Veracode,
+    # select modules, and start the scan manually.
+    # For example, "*" or "**.jar" or "?oss-modules.jar"
+
+    scanIncludesPattern: ''
+    # Scan name should be unique for every scan so apending build number to Scan name
+
+    # Enter a name for the static scan you want to submit to the Veracode Platform for this application
+    # Scan name is equivalent to Version or Build in the Veracode API.
+    # For example, "$JOB_NAME $BUILD_NUMBER"
+    scanName: 'FACT0902-Java-Sample-App-$BUILD_NUMBER'
+
+    # Comma separated list of team names associated with the specified application. Validates against the names of existing teams for this account.
+    teams: 'FACT0902 DevOps Engineering'
+
+    # Enter the filepaths of the files to exclude from the upload for scanning, 
+    # represented as a comma-separated list of ant-style exclude patterns relative to the job's workspace root directory.
+    # Patterns are case-sensitive. Patterns that include commas because they denote filepaths that contain commas need to have the commas replaced with a wildcard character.
+    # If no filepaths are provided, no files (except default excludes) in the job's workspace root directory are excluded.
+    uploadExcludesPattern: ''
+
+    # Enter the filepaths of the files to upload for scanning, represented as a comma-separated list of ant-style include patterns relative to the job's workspace root directory.
+    # Patterns are case-sensitive. 
+    # Patterns that include commas because they denote filepaths that contain commas need to replace the commas with a wildcard character.
+    # If no filepaths are provided, all files in the job's workspace root directory are included.
+    uploadIncludesPattern: '**/dist/*.zip'
+
+    # This option will submit the scan and wait the given amount of time. 
+    # If the scan does not complete and pass policy compliance within the allotted time, then the build will fail.
+    # if [true], provide a timeout value.
+    # waitForScan: false
+    waitForScan: true
+    timeout: 60
+
+
+    useIDkey: true
+    vpassword: ''
+    vuser: ''
+    
+    # This option is only applicable when the build is done by a remote machine in a remote workspace.
+    # If you do not select this checkbox (default), the output files are uploaded to Veracode from the remote workspace.
+    # If you select this checkbox, the output files are copied from the remote machine to a local, 
+    # temporary directory in Master and then updated to Veracode.
+    copyRemoteFiles: true
+    # If value is true credentialsId will be pulled from Vault, 
+    # after stage Completion credential will be deleted from Jenkins,
+    # if value is false then credentialsId will be pulled from jenkins credentials 
+    # if the credentialsId is not present job will fail. 
+
+    IsPullFromVaultRequired: true
+    # valid credentialsId to be used for login
+    credentialsId: '0c2d60c91dc7568d184d74942cf7bdf2'

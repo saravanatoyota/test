@@ -1,0 +1,77 @@
+#########################
+# Deployment Type Specs #
+#########################
+# Choose 'Docker' for Container Deployment
+# Choose 'Kubernetes' for EKS Deployment
+# Choose 'Jar' for Java Jar File Deployment
+DeploymentType: 'Kubernetes'
+
+isDeploymentRequired: true
+####################
+# Deployment Image#
+####################
+Deploy:
+    # Path to deployment yml file 
+    deployymlpath: "Specs/v1.0.0/Deployment/kubernetes-dev"
+    
+####################
+# Rollback Image   #
+####################
+RollbackImage: "artifactory.tfs.toyota.com:443/devops-docker-dev-local/python:161"
+
+###########################
+# Deployment Server Specs #
+###########################
+DeploymentServer:
+    # deplymnet EKS name 
+    name: "awva-dclkn03224"
+    # deplymnet EKS host id 
+    host: "awva-dclkn03224"
+    #credentialsId: "DockerMasterCreds"
+    
+    # If value is true credentialsId will be pulled from Vault, 
+    # after stage Completion credential will be deleted from Jenkins,
+    # if value is false then credentialsId will be pulled from jenkins credentials 
+    # if the credentialsId is not present job will fail. 
+    IsPullFromVaultRequired: true
+
+    # credential id to be used 
+    credentialsId: jees91dapp
+    
+    allowAnyHosts: true
+
+    # If ssh requred to remote host
+    isSshRequired: true
+
+####################
+# Kubernetes Specs #
+####################
+Kubernetes:
+    # Kubernetes namespace to deploy 
+    namespace: k8s-dev-jees91-b8b4
+
+    # Kubernetes namespace to deploy 
+    deploymentName: python-app
+    
+    # Kubernetes application name  
+    appName: python-app
+
+    # Kubernetes Service name
+    serviceName: lb-python-app
+
+    # Path to service yml 
+    serviceDeployFilePath: 'Specs/v1.0.0/Deployment/kubernetes-dev/deploy-service.yml'
+    #serviceDeployFilePath: './kubernetes-dev/deploy-service.yml'
+
+    # Path to deployment yml 
+    appDeployFilePath: 'Specs/v1.0.0/Deployment/kubernetes-dev/deploy-app.yml'
+    #appDeployFilePath: './kubernetes-dev/deploy-app.yml'
+#######################
+# Smoke Testing Specs #
+#######################
+SmokeTesting:
+    # post deploymnet validation URL
+    endpointURL: "internal-a41c60708034547e79b64b7d09db84b2-1554736038.us-east-1.elb.amazonaws.com"
+
+    # sleep time before test start or wait for pod to up and running 
+    sleepTimeInSeconds: 30

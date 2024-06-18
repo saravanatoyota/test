@@ -1,0 +1,66 @@
+#########################
+# Deployment Type Specs #
+#########################
+# Choose 'Docker' for Container Deployment
+# Choose 'Kubernetes' for EKS Deployment
+# Choose 'Jar' for Java Jar File Deployment
+DeploymentType: 'Kubernetes'
+
+isDeploymentRequired: true
+####################
+# Deployment Image#
+####################
+Deploy:
+    # Path to deployment yml file 
+    deployymlpath: "Specs/v1.0.0/Deployment/kubernetes-prod"
+    
+####################
+# Rollback Image   #
+####################
+# IF this spec is not present and deployment validation failed, rollback will not happen and job will failed. 
+# This image will be used in rollback if deployment validation failed. 
+RollbackImage: "artifactory.tfs.toyota.com:443/devops-docker-dev-local/python:161"
+
+###########################
+# Deployment Server Specs #
+###########################
+DeploymentServer:
+    name: "awva-pclkn03226"
+    host: "awva-pclkn03226"
+    #credentialsId: "DockerMasterCreds"
+    credentialsId: "jeep7cpapp"
+    IsPullFromVaultRequired: true
+    allowAnyHosts: true
+    isSshRequired: true
+#######################
+# Smoke Testing Specs #
+#######################
+SmokeTesting:
+    # Use LB url or application url. After deployment this url will accessed to validate deployment. 
+    # It will check 200 responce is received form endpointURL, If responce is not recived from endpointURL post deploymnet 
+    # validation will be marked as failed and it will invoke Rollback process. 
+    # If endpoint url is blank then post deployment validation and also in case failure rollback will be skipped.
+    #endpointURL: 
+    #endpointURL: "internal-ad595248c387d47d08e5c9bda42103d2-1631137212.us-east-1.elb.amazonaws.com"
+    endpointURL: 
+    # sleep time before test start or wait for pod to up and running 
+    sleepTimeInSeconds: 30
+####################
+# Kubernetes Specs #
+####################
+Kubernetes:
+    namespace: k8s-prd-jeep7c-8jnt
+    deploymentName: python-app
+    serviceName: lb-python-app
+    serviceDeployFilePath: 'Specs/v1.0.0/Deployment/kubernetes-prod/deploy-service.yml'
+    appDeployFilePath: 'Specs/v1.0.0/Deployment/kubernetes-prod/deploy-app.yml'
+
+#######################
+# Smoke Testing Specs #
+#######################
+SmokeTesting:
+    # post deploymnet validation URL
+    endpointURL: "internal-a358ba3c06bf542ee8ce7fbec8f9935e-809122189.us-east-1.elb.amazonaws.com"
+
+    # sleep time before test start or wait for pod to up and running 
+    sleepTimeInSeconds: 150

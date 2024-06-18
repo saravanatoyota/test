@@ -1,0 +1,21 @@
+###################
+# SonarQube Specs #
+###################
+SonarQube:
+    # sonar scan flag     
+    isSonarQubeScan: true
+    # sonarqube environments, valid valus are "Dev", "QA", "Stage", "Prod"
+    env: 'Dev'
+    # Application root directory 
+    rootdir: '.'
+    # source path to scan
+    sourcePath: '.'
+    # Sonar prject name
+    projectName: 'python'
+    # Key for Sonar project
+    SONAR_PROJECT_KEY: 'python'
+    # If credentialsId to be pulled from Vault if not it needs to be present in jenkins credentials. 
+    IsPullFromVaultRequired: true
+    # credentialsId for login to SonarQube
+    credentialsId: 'sonar-dev'
+    

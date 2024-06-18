@@ -1,0 +1,12 @@
+############################
+# Build Profile Specs #
+##############################
+Deployment: 
+  Profile: 
+    Dev: './Build/dev-specs.yml'
+    QA: './Build/qa-specs.yml'  
+    Prod: ./Build/prod-specs.yml
+  Target: 
+    Dev: true
+    QA: false  
+    Prod: false

@@ -1,0 +1,84 @@
+################ Mandatory Specs - Do Not Change ################
+# Jenkins worker node where build will execute                  #
+WorkerNode: python                                              #
+#################################################################
+#############
+# SCM Specs #
+#############
+SCM:  
+  # Git repository URL
+  repo: 'https://github.tfs.toyota.com/FACT0902-DevOps-Engineering/dal2-jenkins-worker-baseImage.git'
+  # Git repository branch
+
+  branch: $Branch
+  
+  # If value is true credentialsId will be pulled from Vault, 
+  # after stage Completion credential will be deleted from Jenkins,
+  # if value is false then credentialsId will be pulled from jenkins credentials 
+  # if the credentialsId is not present job will fail. 
+  IsPullFromVaultRequired: false
+  # credential id to be used 
+  credentialsId: jknspgit
+#   credentialsId : jknspgit_token
+  largeFileCheckout: false
+  
+  
+################################################################################################
+# Log levels Valid values#
+# Default log level will be INFO, based on option selcted all prevous log types will dispalyed. 
+# INFO, WARN, DEBUG, ERROR, FATAL, TRACE, DEPRECATED, ALL, SYSTEM
+################################################################################################ 
+AppLogLevel: ALL
+  
+    
+#################################################################################################
+# Job Type                                                                                      #
+# BUILD_DEPLOY: This job type will build and deploy based on deploymnet profile specs,          #
+# if all the valus are flase in deploymnet profile job will only build.                         #
+# DEPLOY: This job type will deploy based on deploymnet profile specs valus                     #
+# PROMOTE_DEPLOY: This job type will promote the artifact to tragte envioronmnet and deploy.    #
+# Deployment currently only work with deployment on EKS.                                        #
+#################################################################################################
+JobType: BUILD_DEPLOY
+#JobType: DEPLOY
+#JobType: PROMOTE_DEPLOY
+
+###############
+# Build Specs #
+###############
+Build:
+  type: 'python'
+  tool: 'Wheel'
+  rootdir: '.'
+  buildCommand: "-v"
+  
+################
+# Qualys Scan  #
+################
+# If isQualysScanRequired spec is not present or isQualysScanRequired is false it will skip the scan.
+# Will invoke scan only if isQualysScanRequired=true
+isQualysScanRequired: false
+
+################
+# Docker Specs #
+################
+Docker:
+  isDockerBuildRequired: true
+  DockerBuild:
+    dockerfilePath: "./Dockerfile"
+    imagePublishURL: "artifactory.tfs.toyota.com/devops-docker-prod-local/jenkins-worker-image"
+    
+  BuildServer:
+    name: ES-EKS-DEV-Node
+    host: awva-dclap59200
+    credentialsId: jees91dapp
+    allowAnyHosts: true
+    isPullFromVaultRequired: true
+    isSudoRequired: true
+############################
+# Email Specs              #
+# Notifaction email address#
+############################
+
+Email:
+    recipent: "priyanka.r@toyota.com"

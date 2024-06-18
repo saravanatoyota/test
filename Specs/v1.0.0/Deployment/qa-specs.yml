@@ -1,0 +1,45 @@
+#########################
+# Deployment Type Specs #
+#########################
+# Choose 'Docker' for Container Deployment
+# Choose 'Kubernetes' for EKS Deployment
+# Choose 'Jar' for Java Jar File Deployment
+DeploymentType: 'Kubernetes'
+
+isDeploymentRequired: true
+####################
+# Deployment Image#
+####################
+Deploy:
+    imageid: artifactory.tfs.toyota.com/devops-docker-dev-local/python:157
+    deployymlpath: "Specs/v1.0.0/Deployment/kubernetes-QA"
+
+###########################
+# Deployment Server Specs #
+###########################
+DeploymentServer:
+    name: "awva-dclkn03224"
+    host: "awva-dclkn03224"
+    #credentialsId: "DockerMasterCreds"
+    credentialsId: "DockerDev"
+    IsPullFromVaultRequired: false
+    allowAnyHosts: true
+    isSshRequired: true
+
+####################
+# Kubernetes Specs #
+####################
+Kubernetes:
+    namespace: k8s-tst-jeet3o-8fd9
+    deploymentName: python-app
+    serviceName: lb-python-app
+    serviceDeployFilePath: './kubernetes-QA/deploy-service.yml'
+    appDeployFilePath: './kubernetes-QA/deploy-app.yml'
+    
+#######################
+# Smoke Testing Specs #
+#######################
+SmokeTesting:
+    endpointURL: "http://internal-abe98ced6653849b19bff074486917a0-152711341.us-east-1.elb.amazonaws.com"
+    sleepTimeInSeconds: 150
+

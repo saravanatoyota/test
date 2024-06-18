@@ -1,0 +1,36 @@
+############################
+# Artifactory Upload Specs #
+############################
+ArtifactoryUpload:
+    # Enable or disable artifactory upload functionality
+    isArtifactoryUploadRequired: false
+    
+    isReturnBuildInfo: true
+
+    # [Mandatory]    
+    # Target server to upload artifact valid valus are "artifactory-dev" and "artifactoryprod"
+    server: "artifactoryprod"
+
+     # [Mandatory]
+    # Specifies the target path in Artifactory in the following format: [repository_name]/[repository_path]
+    # If the pattern ends with a slash, for example "repo-name/a/b/", 
+    # then "b" is assumed to be a folder in Artifactory and the files are uploaded into it. 
+    # In the case of "repo-name/a/b", the uploaded file is renamed to "b" in Artifactory.    
+    # For flexibility in specifying the upload path, you can include placeholders in the form of {1}, {2}, {3}...
+    # which are replaced by corresponding tokens in the source path that are enclosed in parenthesis, For more details, please refer to Using Placeholders.
+    target: "\"devops-pypi-dev-local/Prod/Python-Calc/\""
+
+
+    # [Mandatory]
+    # Specifies the local file system path to artifacts which should be uploaded to Artifactory. 
+    # You can specify multiple artifacts by using wildcards or a regular expression as designated by the regexp property.
+    # If you use a regexp, you need to escape any reserved characters (such as ".", "?", etc.) 
+    # used in the expression using a backslash "\". 
+    pattern: "\"./dist/*.*\""
+
+    # [Optional] 
+    # List of "key=value" pairs separated by a semi-colon ( ; ) to be attached as properties to the uploaded properties. 
+    # If any key can take several values, then each value is separated by a comma ( , ). For example, "key1=value1;key2=value21,value22;key3=value3". 
+    props: "\"tag=${BUILD_NUMBER}\""
+
+

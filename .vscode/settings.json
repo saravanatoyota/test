@@ -1,0 +1,6 @@
+{
+    "sonarlint.connectedMode.project": {
+        "connectionId": "https-sonardce-dev-tfs-toyota-com-",
+        "projectKey": "FACT0902-DevOps-Engineering-dal2-jenkins-worker-baseImage"
+    }
+}

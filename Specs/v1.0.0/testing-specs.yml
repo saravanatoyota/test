@@ -1,0 +1,20 @@
+###############
+# pytest Specs #
+###############
+pytest:
+  # Pytest execution flag, if false Pytest stage will skip. 
+  ispytestrequired: false
+  rootdir: 'pythonapp'
+  # Pytest command to be exicuted.  
+  pytestCommand: "test/"
+
+
+###############
+# Coverage Specs #
+###############
+coverage:
+  # Code coverage execution flag, if false Code coverage stage will skip.
+  iscoveragerequired: false
+  rootdir: 'pythonapp'
+  # Pytest command to be exicuted. 
+  pytestCommand: "test/"
